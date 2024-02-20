@@ -1,0 +1,14 @@
+{
+    "firstname" : "Kyaw",
+    "lastname" : "Kyaw Zayar",
+    "age" : 15,
+    "tax" : false,
+    "passport" : null,
+    "remark" : "In publishing and \"graphic design\", Lorem ipsum is a placeholder text commonly",
+    "holiday" : ["Saturday","Sunday"],
+    "qualify" : [
+        {"subject" : "Myanmar","mark" : 80},
+        {"subject" : "English","mark" : 90},
+        {"subject" : "Math","mark" : 100},
+    ]
+}

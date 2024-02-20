@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Openweathermap Application programming Interface</title>
+</head>
+
+<body>
+
+
+    <script type="text/javascript">
+
+        //AJAX 
+        //    initialize the HTTP Request
+
+        // var xmlhttp = new XMLHttpRequest();
+        //             //protocol , route link,
+        // xmlhttp.open("GET","./l12sampledata.json",false); // false mean no synchronize 
+        // xmlhttp.send();
+
+        // if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+        //     // var result = xmlhttp;
+        //     // console.log(result);
+
+        //     var result = xmlhttp.responseText;
+        //     // console.log(result);
+
+        // }
+
+        // console.log(result);
+        // console.log(typeof(result));
+
+        // result = JSON.parse(result);
+
+        // console.log(result);
+        // console.log(typeof(result));
+
+        // console.log(result.weather);
+        // console.log(result.weather[0].main);
+        // console.log(result.weather[0]['main']);
+        // console.log(result.wind.speed);
+        // console.log(result.wind['speed']);
+        // console.log(result['wind']['speed']);
+        // console.log(result.name);
+
+
+
+        // => fetch()
+        // Sytax; 
+
+        // fetch(url)
+        // .then(response=>response.json())
+        // .then(data)  concat function
+        // .catch(err=>console.log(err))
+
+        var url = "./l12sampledata.json";
+        fetch(url).then(function (response) {
+            // console.log(response);
+            // console.log(response.headers.get('Content-type')); // application/json; charset=UTF-8
+
+            // console.log(response.type); // return basic 
+            return response.json();  // change json format 
+        }).then(function (data) {
+            console.log(data);
+            console.log(typeof data); // object
+            console.log(data.weather);
+            console.log(data.weather[0].main);
+            console.log(data.weather[0]['main']);
+            console.log(data.wind.speed);
+            console.log(data.wind['speed']);
+            console.log(data['wind']['speed']);
+            console.log(data.name);
+        }).catch(function (err) {
+            console.log(err);
+        });
+
+
+
+    </script>
+</body>
+
+</html>

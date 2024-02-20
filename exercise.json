@@ -1,0 +1,16 @@
+{
+    "firstname" : "maung",
+    "lastname" : "kyaw",
+    "age" : 15,
+    "tax" : false,
+    "passport" : null,
+    "remark" : "lorem",
+    "holiday" : ["Saturday","Sunday"],
+    "qualify" : [
+        {"subject":"Myanmar","mark":80},
+        {"subject":"English","mark":90},
+        {"subject":"Math","mark":100}
+    ]
+}
+
+

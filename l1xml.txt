@@ -1,0 +1,54 @@
+JSON = Do data transfer 
+API (Application Programming Interface)
+
+=> XML (Extensible Markup Language)
+eXtensible = Exten our notation 
+Markup = Write using Markup  (<>)
+Language = Create your own document 
+
+XML is not all the same HTML . But both are Markup language 
+XML is used to describe the data. HTML is used to display the data 
+XML must define custom rules (tags) . HTML has pre-define rules (tags) 
+
+=>XML 
+Need to enclose name of key withing double quotes (should not use single quotes)
+
+eg.element
+<markup>Something Here</markup>
+
+eg.attribute
+<markup title="info">Something Here</markup>
+
+XML document = Describe Data (XML designed to describe data and to focus on what data is)
+HTML document = Display Data (HTML was designed to display and focus on how data look)
+
+Product List                        Root Element (Parent Element)
+
+    Product                         Child of Root Element (Child Element)
+        Name                        Child Element (root node)
+        Description                 Child Element (root node)
+        price                       Child Element (root node)
+
+    Product                         Child of Root Element (Child Element)
+        Name                        Child Element (root node)
+        Description                 Child Element (root node)
+        price                       Child Element (root node) 
+
+//? => Example
+
+    Jetbrain (Company)
+        Webstorm Editor             Child of Root Element (Child Element)
+            Webstorm                Child Element (root node)
+            html/css/js support     Child Element (root node)
+            $100                    Child Element (root node)
+
+
+        Phpstorm Editor 
+            Phpstorm 
+            php support 
+            $150 
+
+=> All XML Document must start with XML Declaration (xml Prolog)
+<!DOCTYPE html>
+<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>

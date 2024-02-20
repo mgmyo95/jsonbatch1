@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Openweathermap Application programming Interface</title>
+</head>
+
+<body>
+
+
+    <script type="text/javascript">
+
+        // https://openweathermap.org/
+
+        const info = { "coord": { "lon": 96.0627, "lat": 16.9022 }, "weather": [{ "id": 802, "main": "Clouds", "description": "scattered clouds", "icon": "03n" }], "base": "stations", "main": { "temp": 301.27, "feels_like": 306.05, "temp_min": 301.27, "temp_max": 301.27, "pressure": 1011, "humidity": 83 }, "visibility": 6000, "wind": { "speed": 2.06, "deg": 210 }, "clouds": { "all": 40 }, "dt": 1700753172, "sys": { "type": 1, "id": 9322, "country": "MM", "sunrise": 1700696648, "sunset": 1700737210 }, "timezone": 23400, "id": 1481709, "name": "Mithwegon", "cod": 200 };
+
+        console.log(info);
+        console.log(info.weather);
+        console.log(info.weather[0].main);  //Dot Notation
+        console.log(info.weather[0]['main']);  //Bracket Notation
+
+        console.log(info.wind.speed);
+        console.log(info.wind['speed']);
+        console.log(info['wind']['speed']);
+
+
+    </script>
+</body>
+
+</html>

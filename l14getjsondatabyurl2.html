@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Openweathermap Application programming Interface</title>
+</head>
+
+<body>
+
+
+    <script type="text/javascript">
+        // https://randomuser.me/
+
+        var xmlhttp = new XMLHttpRequest();
+        var url = "https://randomuser.me/api/";
+        xmlhttp.open("GET", url, false); // false mean no synchronize
+        // xmlhttp.open("GET", url, true); // true mean synchronize
+        xmlhttp.send();
+
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            var result = xmlhttp.responseText;
+        }
+
+        console.log(result);
+        console.log(typeof result);
+
+        result = JSON.parse(result);
+        console.log(result, typeof (result));
+        console.log(result.results[0]);
+        console.log(result.results[0].name.first, result.results[0].name.last);
+        console.log(result.results[0]['name']['first'], result.results[0]['name']['last']);
+
+    </script>
+</body>
+
+</html>

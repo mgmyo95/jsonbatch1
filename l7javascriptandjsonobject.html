@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Javascript Object Literal & JSON Object</title>
+    </head>
+    <body>
+        
+
+    <script type="text/javascript">
+
+        const employee = {
+            firstname : "Maung",
+            lastname : "Zaw",
+            "age" : 20,
+            'tax' : true,
+            getname : function(){
+                return "I am " + this.firstname + " " +this.lastname;
+            }
+        };
+
+        console.log(employee);
+        console.log(employee.firstname,employee.lastname);
+        console.log(employee.age,employee.tax);
+        console.log(employee.getname());
+
+
+
+        var student = {
+            "firstname" : "Kyaw",
+            "lastname" : "Kyaw Zayar",
+            "age" : 15,
+            "tax" : false,
+            "passport" : null,
+            "remark" : "In publishing and \"graphic design\", Lorem ipsum is a placeholder text commonly",
+            "holiday" : ["Saturday","Sunday"],
+            "qualify" : [
+                {"subject" : "Myanmar","mark" : 80},
+                {"subject" : "English","mark" : 90},
+                {"subject" : "Math","mark" : 100},
+            ]
+        };
+
+        console.log(student);
+        console.log(student.firstname,student.lastname);
+        console.log(student.age,student.tax);
+        console.log(student.passport);
+        console.log(student.holiday);
+        console.log(student.holiday[0]);
+        console.log(student.holiday[1]);
+        console.log(student.qualify);
+        console.log(student.qualify[0]);
+        console.log(student.qualify[0].subject,student.qualify[0].mark);
+        console.log(student.qualify[1].subject,student.qualify[1].mark);
+       
+
+
+    </script>
+    </body>
+</html>

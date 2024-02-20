@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Get Json data by url 5</title>
+    <style type="text/css">
+        body {
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 300px;
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h3>Using Fetch</h3>
+        <button type="button" id="btn">Load Data</button>
+    </div>
+
+    <script type="text/javascript">
+
+        
+        var getbtn = document.getElementById('btn');
+
+        getbtn.addEventListener('click', function () {
+            loaddata();
+        });
+
+        function loaddata() {
+            // https://dummyjson.com/
+            var url = "https://dummyjson.com/products";
+            fetch(url).then(function(response){
+                return response.json();
+            }).then(function(data){
+                // console.log(data);
+                // console.log(data.products);
+                data.products.forEach(function(val){
+                    // console.log(val);
+                    console.log(val.id,val.title,val.price);
+                    
+                });
+            }).catch(function(err){
+                console.log(err);
+            });
+
+        }
+        
+
+        // https://ipregistry.co/
+        // https://whatismyipaddress.com/
+
+
+
+// 11DJ
+
+
+
+    </script>
+</body>
+
+</html>
+
+<!-- IP 
+local ip address (router 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4)
+same connection file share lot ya tl 
+
+External ip address 
+    (i) Public IP / Dynamic IP (FTTP Fiber To The Home)
+    (ii) Fixed IP / Static IP       
+
+
+    https://ipregistry.co/ 
+    sign up  -->

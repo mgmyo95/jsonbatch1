@@ -1,0 +1,44 @@
+=>Namespace 
+//? => Exercise (Before Namespace)
+<?xml version="1.0"?>
+<root>
+
+    <product>
+        <title>Vechicle</title>
+        <type>EV Car</type>
+    </product>
+
+    <product>
+        <title>T-shirt</title>
+        <color>Red</color>
+    </product>
+
+    <product>
+        <title>Fruit</title>
+        <name>Orange</name>
+    </product>
+
+</root>
+
+//? => Exercise (After Namespace)
+<?xml version="1.0"?>
+<root>
+
+    <v:product>
+        <v:title>Vechicle</v:title>
+        <v:type>EV Car</v:type>
+    </v:product>
+
+    <c:product>
+        <c:title>T-shirt</c:title>
+        <c:color>Red</c:color>
+    </c:product>
+
+    <f:product>
+        <f:title>Fruit</f:title>
+        <f:name>Orange</f:name>
+    </f:product>
+
+</root>
+
+//? 2NS

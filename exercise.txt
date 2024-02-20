@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class>
+    <s:students>
+        <s:student id="100">Aung Aung</s:student>
+        <s:student id="101">Maung Maung</s:student>
+        <s:student id="102">Kyaw Kyaw</s:student>
+    </s:students>
+    <t:teachers>
+        <t:teacher id="200">Su Su</t:teacher>
+        <t:teacher id="201">Nu Nu</t:teacher>
+        <t:teacher id="202">Hla Hla</t:teacher>
+    </t:teachers>
+</class>
+
+/class 
+/class/s:students 
+/class/s:students/s:student 

@@ -1,0 +1,53 @@
+=>CORS
+Cross-origin Resource Sharing (CORS) (မူရင်းအရင်းအမြစ်မျှဝေခြင်း (CORS))
+
+-CORS is a mechanism for integrating applications 
+-CORS defines are loaded in one domain to interest with different domain 
+-CORS allows client browser to check with third-party servers (if request auth before data transfers)
+-To protect cross-site request forgery (csrf)
+
+-CORS သည် အပလီကေးရှင်းများ ပေါင်းစပ်ရန်အတွက် ယန္တရားတစ်ခုဖြစ်သည်။
+-CORS သတ်မှတ်ချက်များကို မတူညီသောဒိုမိန်းတစ်ခုဖြင့် စိတ်ဝင်စားစေရန် ဒိုမိန်းတစ်ခုတွင် တင်ထားသည်။
+-CORS သည် ဖောက်သည်ဘရောက်ဆာများကို ပြင်ပဆာဗာများဖြင့် စစ်ဆေးရန် ခွင့်ပြုသည် (ဒေတာမလွှဲပြောင်းမီ အထောက်အထား တောင်းခံပါက)
+- ဆိုက်နှစ်ခုတောင်းဆိုမှုအတုအပ (csrf) ကိုကာကွယ်ရန်
+
+
+
+= Same-orign policy (SOP)
+
+URL                                 Outcome                     Reason 
+http://dltbank.com/transfer/        Same Origin 
+create.html          
+http://dltbank.com/transfer/        Same Origin                 Only path   
+report/check.html                                               different
+http://mm.dltbank.com/transfer/     Different Origin            Different Protocol    
+report/check.html    
+http://mm.dltbank.com:81/transfer/   Different Origin            Different port     
+create.html                                                      (http:// is port 80 by
+                                                                 default)
+
+http://news.dltbank.com:81/transfer/   Different Origin            Different host     
+create.html                                 
+
+Same-origin policy is highly secure but inflexible for genius use case
+CORS is an extension of the same-origin policy 
+You need CORS when you to pull data from external APIs that are public or authorized or (authorize third-party access to your own server resources)
+
+တူညီသောမူလမူဝါဒသည် အလွန်လုံခြုံသော်လည်း ဉာဏ်ကြီးရှင်အသုံးပြုမှု ကိစ္စအတွက် ပြုပြင်ပြောင်းလဲ၍မရပါ။
+CORS သည် same-ဇာစ်မြစ်မူဝါဒ၏ တိုးချဲ့မှုတစ်ခုဖြစ်သည်။
+အများသူငှာ သို့မဟုတ် တရားဝင်ခွင့်ပြုထားသော သို့မဟုတ် (သင်၏ကိုယ်ပိုင်ဆာဗာရင်းမြစ်များသို့ ပြင်ပကုမ္ပဏီမှဝင်ရောက်ခွင့်ကိုခွင့်ပြုပါ) ပြင်ပ APIs များမှ ဒေတာများကို ဆွဲယူသည့်အခါတွင် CORS လိုအပ်ပါသည်။ 
+
+=> xmlhttp.readystate === 4
+
+0  = UNSEND open() has not been called yet. (UNSEND open() ကို မခေါ်ရသေးပါ။)
+
+1  = OPENED send() has been called (OPENED send() ကို ခေါ်ပြီးပါပြီ။)
+
+2  = HEADERS_RECEIVED send() has been called . and headers and status are available(HEADERS_RECEIVED send() ကို ခေါ်ပြီးပါပြီ။ နှင့် ခေါင်းစီးများနှင့် အဆင့်များကို ရရှိနိုင်သည်။)
+
+3  = LOADING downloading, responseText holds partial datas. (ဒေါင်းလုဒ်ဆွဲနေသည်၊ တုံ့ပြန်ချက်စာသားသည် တစ်စိတ်တစ်ပိုင်းဒေတာများကို သိမ်းဆည်းထားသည်။)
+
+4  = DONE operation is completed.  (DONE လုပ်ဆောင်ချက် ပြီးပါပြီ။)
+
+pushing attack (fake form)
+
