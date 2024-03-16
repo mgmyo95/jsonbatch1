@@ -30,14 +30,14 @@
 				width:clamp(350px,90%,600px);
 				/* background-color: #f4f4f4; */
 				padding: 10px;
-                text-align:center;
+                text-align:start;
 			}
 
             input,button{
                 padding:10px 20px;
                 font-size:19px;
                 
-                margin-block:10px;
+                margin-block:20px;
                 margin:0;
             }
 
@@ -50,12 +50,24 @@
                 cursor:pointer;
             }
 
+            .displayone{
+                margin-block:20px;
+            }
+
             .displayone > img{
                 width:250px;
                 height:250px;
                 object-fit:cover;
                 padding-block:20px;
                 border-radius:20px;
+            }
+
+            .displaytwo{
+                display:grid;
+                grid-template-columns:repeat(4,1fr);
+                gap:15px;
+
+                margin-block:50px;
             }
 
             .displayone p{
@@ -67,20 +79,53 @@
                 text-align:start;
             }
 
-            .displaytwo{
-                /* display:grid;
-                grid-template-columns:repeat(5,1fr);
-                gap:20px; */
-
-                display:flex;
-                flex-wrap:wrap;
-                gap:20px;
+            .displaytwo .foodresult{
+                width:150px;
+                height:150px;
+                overflow:hidden;
+                cursor:pointer;
+                position:relative;
+            }
+            
+            .displaytwo .foodresult img{
+                width:100%;
+                height:100%;
+                object-fit:scale-down;
+                transition:all 0.4s ease;
             }
 
-            .displaytwo img{
-                width:200px;
-                height:200px;
-                object-fit:scale-down;
+           
+
+            .food-info{
+                width:100%;
+                height:100%;
+                background-color:rgba(0,0,0,0.7);
+                text-align:center;
+                color:#ffff;
+
+                display:grid;
+                place-items:center;
+
+                position:absolute;
+                top:0;
+                left:0;
+
+                opacity:0;
+                transform:scale(0);
+                
+                perspective:500px;
+                transition:all 0.3s ease-in-out;
+            }
+
+            .foodresult:hover .food-info{
+                opacity:1;
+               
+                transform:scaleY(1);
+            }
+
+            .foodresult:hover img{
+                opacity:0;
+                transform:scale(0);
             }
         
 
@@ -125,38 +170,41 @@
         const getdisplaytwo = document.getElementById('displaytwo');
 
         getrandombtn.addEventListener('click',getrandomfood);
-        getform.addEventListener("submit",searchfoods);
+        getform.addEventListener('submit',searchfoods);
+
         function getrandomfood(){
-            // Lookup a single random meal
 
-            const url = "https://www.themealdb.com/api/json/v1/1/random.php";
+            const url = `https://www.themealdb.com/api/json/v1/1/random.php`;
 
-            fetch(url).then(response=>response.json()).then(data=>{
-                console.log(data);
+            fetch(url).then(response=>{
+                return response.json();
+            }).then(data=>{
                 // console.log(data.meals[0]);
-
                 const food = data.meals[0];
+                // console.log(food);
+
                 foodlettertodo(food);
 
             }).catch(err=>console.log(err));
+
         }
 
         function foodlettertodo(food){
             console.log(food);
-
             const ingredients = [];
 
-            for(var x = 1 ; x <= 20 ; x++){
+            for(let x = 1 ; x <= 20 ; x++){
                 // console.log(x);
                 if(food[`strIngredient${x}`]){
-                    ingredients.push(`${food[`strIngredient${x}`]} = ${food[`strMeasure${x}`]}`)
+                    ingredients.push(`${food[`strIngredient${x}`]} = ${food[`strMeasure${x}`]}`);
                 }
             }
 
-            console.log(ingredients);
+            // console.log(ingredients);
 
             getdisplayone.innerHTML = `
                 <h3>${food.strMeal}</h3>
+
                 <img src="${food.strMealThumb}" alt="${food.strMeal}" />
 
                 <ul class="list-group">
@@ -168,54 +216,60 @@
                     <h3>Main Ingredients</h3>
 
                     <ol>
-                        ${ingredients.map(ingredient=>`<li>${ingredient}</li>`).join("")}
+                        ${ingredients.map(ingredient => `<li>${ingredient}</li>`).join("")}
                     </ol>
-
                 </div>
 
             `;
 
         }
 
-
         function searchfoods(e){
             e.preventDefault();
-            // console.log("hi");
+
             const getval = getsearch.value;
             // console.log(getval);
 
             if(getval.trim()){
-                // Search meal by name
-
-                let url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${getval}`;
+                url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${getval}`;
 
                 $.ajax({
                     method : "GET",
                     url : url,
-                    dataType : "json"
+                    dataType : 'json'
                 }).done(data=>{
-                    // console.log(data.meals);
+                    console.log(data);
+                    console.log(data.meals);
+                    // console.log(typeof data.meals);
+
                     if(data.meals === null){
-                        getheader.innerHTML = `<p>There is no data. Try again sir.</p>`;
+                        getheader.innerHTML = '<p>There is no data. Try Again Sir.</p>';
                     }else{
-                        getdisplaytwo.innerHTML = data.meals.map(food=>`
+                        getdisplaytwo.innerHTML = data.meals.map(food=> `
                             <div class="foodresult">
-                                <img src="${food.strMealThumb}" alt="${food.strMeal}" />
-                            </div>  
+                                <img src="${food.strMealThumb}" alt="${food.idMeal}" />
+                                <div class="food-info">
+                                    <h3>${food.strMeal}</h3>
+                                </div>
+                            </div>
                         `).join("");
                     }
-                }).fail(()=>console.log("Error"));
 
-            }else{
-                window.alert("Please enter your search value !!!");
+                    getsearch.value = "";
+
+                }).fail(()=>console.log("error"));
+
             }
 
         }
 
-
+        getdisplaytwo.addEventListener('click/',e=>{
+            // console.log(e.target);
+            console.log(e.composedPath());
+        })
 
        
     </script>
 </body>
 
-</html>
+</html>  
