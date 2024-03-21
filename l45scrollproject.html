@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Scroll Project</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+		integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+			background-color:#f4f4f4;
+
+			display:flex;
+			align-items:center;
+			flex-direction:column;
+
+			padding:0;
+			margin:0;
+		}
+
+		.post{
+			width:40vw;
+			background-color:#fff;
+			box-shadow:0 2px 5px rgba(0,0,0,0.3);
+			padding:20px;
+			margin-block:40px;
+			position:relative;
+		}
+
+		.post .postid{
+			width:30px;
+			height:30px;
+			background-color:#000;
+			color:#fff;
+			font-size:15px;
+			border-radius:50%;
+
+			position:absolute;
+			right:-15px;
+			bottom:-15px;
+
+			display:flex;
+			justify-content:center;
+			align-items:center;
+		}
+
+		.post .info .title{
+			margin:0;
+		}
+
+
+		.post .info .content{
+			line-height:25px;
+		}
+
+		.loader{
+			display:flex;
+			position:fixed;
+			bottom:10px;
+			opacity:0;
+		}
+
+		.loader.show{
+			opacity:1;
+		}
+
+		.triangle{
+			width:0;
+			height:0;
+			/* background-color:black; */
+
+			border-left:10px solid transparent;
+			border-right:10px solid transparent;
+			border-top:10px solid blue;
+
+			margin:5px;
+			animation:myani 0.5s ease-in-out infinite;
+		}
+
+		.triangle:nth-last-of-type(2){
+			animation-delay:0.1s;
+		}
+
+		.triangle:nth-last-of-type(3){
+			animation-delay:0.2s;
+		}
+
+		@keyframes myani{
+			0%{
+				transform:translateY(0);
+			}
+
+			50%{
+				transform:translateY(-10px);
+			}
+
+			100%{
+				transform:translateY(0);
+			}
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="post">
+			<div class="postid">1</div>
+			<div class="info">
+				<h4 class="title">This is new post one</h4>
+				<p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut mollitia, cumque non nam alias quam voluptates autem ullam illum id, inventore at, fuga voluptas quibusdam beatae perspiciatis. Fugiat, deserunt aliquam?Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi ad iste delectus dolore, cumque rem nostrum, pariatur dignissimos consequuntur consequatur provident repellendus? Nulla praesentium libero sequi vitae accusamus nobis quo.</p>
+			</div>
+		</div>
+
+		<div class="post">
+			<div class="postid">2</div>
+			<div class="info">
+				<h4 class="title">This is new post two</h4>
+				<p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut mollitia, cumque non nam alias quam voluptates autem ullam illum id, inventore at, fuga voluptas quibusdam beatae perspiciatis. Fugiat, deserunt aliquam?Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi ad iste delectus dolore, cumque rem nostrum, pariatur dignissimos consequuntur consequatur provident repellendus? Nulla praesentium libero sequi vitae accusamus nobis quo.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="loader">
+		<div class="triangle"></div>
+		<div class="triangle"></div>
+		<div class="triangle"></div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	<script type="text/javascript">
+
+		
+	</script>
+</body>
+
+</html>
+
+<!-- .fetch(request)
+.then(promise)
+.then(response) -->
+
+<!-- 21AA -->
