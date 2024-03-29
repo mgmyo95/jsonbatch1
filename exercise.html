@@ -25,30 +25,83 @@
         body {
             height: 100vh;
 
-            display: flex;
-            justify-content: center;
+            display:grid;
+            place-items:center;
         }
 
         /* min   default  max */
         /* clamp(200px,75%,300px); */
         .container {
-            width: clamp(350px, 90%, 600px);
+            width: clamp(300px, 90%, 500px);
+            height:auto;
+            background-image:url('https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg');
             /* background-color: #f4f4f4; */
-            padding: 10px;
+            border:1px solid orangered;
+            padding: 20px;
+            border-radius:10px;
             text-align: start;
+
+            transition:all .3s ease-in;
+            animation:myani 15s linear infinite alternate-reverse;
         }
 
-
-        .card-body img {
-            width: 120px;
-            height: 120px;
+        .container:hover{
+            border:none;
+            box-shadow:0 0 15px rgba(0,0,0,0.3);
         }
+
+        @keyframes myani{
+            0%{
+                border-radius:30% 50% 20% 80% / 85% 30% 20% 90%;
+            }
+
+            25%{
+                border-radius:20% 60% 20% 70% / 25% 60% 10% 70%;
+            }
+
+            50%{
+                border-radius:20% 60% 80% 20% / 45% 10% 60% 30%;
+            }
+
+            75%{
+                border-radius:10% 90% 70% 31% / 45% 57% 34% 60%;
+            }
+
+            100%{
+                border-radius:30% 50% 20% 80% / 85% 30% 20% 90%;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-  
+  <div class="container">
+    <form action="" method="">
+        <div class="form-group mb-3">
+            <label for="firstname">firstname</label>
+            <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Enter firstname">
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="lastname">lastname</label>
+            <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Enter Lastname">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="firstname" class="form-control" placeholder="Enter password">
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn-info rounded-0">submit</button>
+    </form>
+  </div>
 
 
     <!--bootstrap version 5.3.3 js-->
@@ -62,7 +115,42 @@
 
     <script type="text/javascript">
 
-       
+      const getbtn = document.getElementById('submit-btn');
+
+      getbtn.addEventListener('click',function(e){
+        e.preventDefault();
+        var getinputs = document.querySelectorAll("input[type='text'],input[type='email'],input[type='password']");
+
+        var dataobjs = {};
+
+        for(var i = 0 ; i < getinputs.length ; i++){
+            var getname = getinputs[i].name;
+            var getvalue = getinputs[i].value;
+            // console.log(getname,getvalue);
+
+            dataobjs[getname] = getvalue;
+        }
+
+        // console.log(dataobjs);
+
+        localStorage['info'] = JSON.stringify(dataobjs);
+
+      });
+
+      window.onload = function(){
+        let datas;
+        if(localStorage.getItem('info') != null){
+            datas = JSON.parse(localStorage.getItem('info'));
+
+            console.log(datas);
+
+            console.log(datas.firstname,datas.lastname);
+            console.log(datas.email,datas.password);
+
+        }
+      }
+
+      
 
     </script>
 </body>
