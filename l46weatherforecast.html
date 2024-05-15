@@ -77,9 +77,9 @@
 							<h2 class="city">Bago</h2>
 							<p class="dayname">Sunday</p>
 							<div class="info">
-								<p class="humidity"><span class="humdata">5</span> %</p>
-								<p class="wind"><span class="windata">5</span> m/s</p>
-								<p class="pressure"><span class="predata">1050</span> hPa</p>
+								<p class="humidity">Humidity : <span class="humdata">5</span> %</p>
+								<p class="wind">Wind : <span class="windata">5</span> m/s</p>
+								<p class="pressure">Pressure : <span class="predata">1050</span> hPa</p>
 							</div>
 						</div>
 
@@ -122,11 +122,13 @@
 		let gethumidity = document.querySelector('.humidity > .humdata');
 		let getwind = document.querySelector('.wind > .windata');
 		let getpressure = document.querySelector('.pressure > .predata');
-		let gettemperature = document.querySelector('.temperature > .temdata');
-		let getforecast = document.querySelector('.forecast');
+		let getpredata = document.querySelector('.temperature > .predata');
+		let gettemperature = document.querySelector('.temperature > .othertemdata');
+		let getuiforecast = document.querySelector('.forecast');
 		let key = `ab97e13f76f324f780bf3244b9c4b672`;
 		let city = "yangon";
-		let weatherurl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+		let weatherurl = `https://api.openweathermap.org/data/2.5/weather?units=metric&appid=${key}`;
+		let forecasturl = `https://api.openweathermap.org/data/2.5/forecast?units=metric&appid=${key}`;
 		
 
 		// console.log(new Date().getDay());
@@ -144,7 +146,9 @@
 		getform.addEventListener('submit',async function(e){
 			e.preventDefault();
 			const getcity = getsearch.value;
-			console.log(getcity);
+			// console.log(getcity);
+
+			weatherforcity(getcity);
 
 			getsearch.value = "";
 			getsearch.focus();
@@ -152,12 +156,12 @@
 		});
 
 
-		let getweatherbycity = async function(city){
-			 let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+		async function getweatherbycity(city){
+			 let url = `${weatherurl}&q=${city}`;
 			
 			//  console.log(url);
 
-			let  response = await fetch(url);
+			let  response = await axios.get(url);
 			console.log(response);
 
 			if(response.status !== 200){
@@ -165,32 +169,112 @@
 				return;
 			}
 
-			let data = await response.json();
-			// console.log(data); {coord: {…}, weather: Array(1), base: 'stations', main: {…}, visibility: 7000, …}
+			let data = await response.data;
+			console.log(data); // {coord: {…}, weather: Array(1), base: 'stations', main: {…}, visibility: 7000, …}
 
 			return data;
 		}	
 
-		let weatherforcity = async (city)=>{
+		async function weatherforcity(city){
 			// console.log(city);
 			let response = await getweatherbycity(city);
-			// console.log(response);  
+			// console.log("wwatherforcity",response);  
+
+			const cityid = response.id;
+			// console.log(cityid)  // 1298824
+;
 			getweathertodom(response);
+			let fivedayforecast = await getforecastbycityid(cityid);
+			getforecasttodom(fivedayforecast);
 		}
 
 		weatherforcity('yangon');
 
+		async function getforecastbycityid(cityid){
+			let url =  `${forecasturl}&id=`+cityid;
+			let response = await axios.get(url);
+			let data = await response.data;
+			// console.log("getforecastbycityid",data);
 
-		let getweathertodom = (data)=>{
-			console.log(data);	
+			let forecastlists = data.list;
+			// console.warn(forecastlists);
+
+			let comingdays = [];
+			forecastlists.forEach(forecastlist=>{
+				// console.log(forecastlist);
+
+				let date = new Date(forecastlist.dt_txt);
+				// console.log(date);
+
+				let hours = date.getHours();
+				// console.log(hours);
+
+				if(hours === 12){
+					comingdays.push(forecastlist);
+				}
+
+			});
+
+			// console.log(comingdays);
+			return comingdays;
+		}
+
+		
+
+		
+
+		function getweathertodom(data){
+			// console.log(data);		
+			
 			getcity.textContent = `${data.name} , ${data.sys.country}`;
 			getdayname.textContent = dayofweek();
 			gethumidity.textContent = data.main.humidity;
 			getwind.textContent = data.wind.speed;
 			getpressure.textContent = data.main.pressure;
 			
-			gettemperature.textContent = data.main.tmp > 0 ? `+${data.main.temp}` : `-${data.main.temp}`;
+			// gettemperature.textContent = data.main.temp > 0 ? `+${data.main.temp}` : `-${data.main.temp}`;
+
+
 		}
+
+		async function getforecasttodom(forecasts){
+			// console.log(forecasts);
+
+			getuiforecast.innerHTML = "";
+			forecasts.forEach((forecast,idx)=>{
+					// console.warn(forecast.dt);
+
+				// console.warn('ts',Date.now());  // 1714064126650  millisecond
+				// console.warn('dt',forecast.dt);  // 1714132800	  second
+
+				const daynames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+				const getday = new Date(forecast.dt_txt).getDay();
+				console.log(getday);
+
+			
+
+				let temperature = forecast.main.temp > 0 ? `+${Math.round(forecast.main.temp)}` : `-${Math.round(forecast.main.temp)}`;
+
+				// icon link = https://openweathermap.org/weather-conditions
+
+				let html =  `
+						<div>
+							<img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" alt="icon" />
+
+							<h3 class="otherday">${daynames[getday]}</h3>
+							<p class="temperature"><span class="othertemdata">${temperature}</span>&deg;C</p>
+						</div>
+				`;
+
+				getuiforecast.insertAdjacentHTML('beforeend',html);
+
+			});
+		}
+
+		// beforebegin 
+		// beforeend    firstin firstout 
+		// afterbegin 	firstin lastout 
+		// afterend		
  
 
 	</script>
@@ -204,3 +288,5 @@ Enter this url in browser https://api.github.com/
 so you will see all avilable api route list  -->
 
 <!-- 14GH -->
+
+<!-- 25FB -->

@@ -31,78 +31,121 @@
 
         /* min   default  max */
         /* clamp(200px,75%,300px); */
-        .container {
-            width: clamp(300px, 90%, 500px);
-            height:auto;
-            background-image:url('https://deep-image.ai/blog/content/images/2022/09/underwater-magic-world-8tyxt9yz.jpeg');
-            /* background-color: #f4f4f4; */
-            border:1px solid orangered;
-            padding: 20px;
-            border-radius:10px;
-            text-align: start;
 
-            transition:all .3s ease-in;
-            animation:myani 15s linear infinite alternate-reverse;
+        .container{
+            width:100%;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
         }
 
-        .container:hover{
-            border:none;
-            box-shadow:0 0 15px rgba(0,0,0,0.3);
+        .post{
+            width:30vw;
+            background-color:#f4f4f4;
+            box-shadow:3px 5px 4px rgba(0,0,0,0.4);
+            padding:20px;
+            margin-block:20px;
+
+            position:relative;
         }
 
-        @keyframes myani{
-            0%{
-                border-radius:30% 50% 20% 80% / 85% 30% 20% 90%;
-            }
+        .postid{
+            width:30px;
+            height:30px;
+            background:#000;
+            border-radius:50%;
+            text-align:center;
+            line-height:30px;
+            color:#fff;
 
-            25%{
-                border-radius:20% 60% 20% 70% / 25% 60% 10% 70%;
-            }
-
-            50%{
-                border-radius:20% 60% 80% 20% / 45% 10% 60% 30%;
-            }
-
-            75%{
-                border-radius:10% 90% 70% 31% / 45% 57% 34% 60%;
-            }
-
-            100%{
-                border-radius:30% 50% 20% 80% / 85% 30% 20% 90%;
-            }
+            position:absolute;
+            bottom:-15px;
+            right:-15px;
         }
+
+        .loader{
+            display:flex;
+            position:fixed;
+            bottom:20px;
+            opacity:0;
+        }
+
+        .loader.show{
+            opacity:1;
+        }
+
+        .circle{
+            width:10px;
+            height:10px;
+            clip-path: circle(50%);
+            background-color:crimson;
+            margin:5px;
+
+            animation: myani 0.5s ease-in-out infinite;
+        }
+
+        .circle:nth-last-of-type(2){
+            animation-delay:0.1s;
+        }
+
+        .circle:nth-last-of-type(3){
+            animation-delay:0.2s;
+        }
+
+        @keyframes myani {
+			0% {
+				transform: translateY(0);
+                opacity:0.5;
+			}
+
+			50% {
+				transform: translateY(-10px);
+                opacity:0.8;
+			}
+
+			100% {
+				transform: translateY(0);
+                opacity:0.9;
+			}
+		}
 
     </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <form action="" method="">
-        <div class="form-group mb-3">
-            <label for="firstname">firstname</label>
-            <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Enter firstname">
-        </div>
-        
-        <div class="form-group mb-3">
-            <label for="lastname">lastname</label>
-            <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Enter Lastname">
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
+    <div class="container">
+        <!-- <div class="post">
+            <div class="postid">1</div>
+            <div class="info">
+				<img src="" alt="" />
+				<h4 class="title">Ms. Annie</h4>
+				<a href="tel:09123456789" class="content">09123456789</a>
+				<br />
+				<a href="">annie@gmail.com</a>
+				<p class="country">Singapore</p>
+			</div>
         </div>
 
-        <div class="form-group mb-3">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="firstname" class="form-control" placeholder="Enter password">
-        </div>
+        <div class="post">
+            <div class="postid">2</div>
+            <div class="info">
+				<img src="" alt="" />
+				<h4 class="title">Ms . Aung Aung</h4>
+				<a href="tel:09123456789" class="content">09123456789</a>
+				<br />
+				<a href="">aungaung@gmail.com</a>
+				<p class="country">Myanmar</p>
+			</div>
+        </div> -->
+    </div>
 
-        <button type="submit" id="submit-btn" class="btn btn-info rounded-0">submit</button>
-    </form>
-  </div>
-
+    <div class="loader">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    
 
     <!--bootstrap version 5.3.3 js-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -115,42 +158,83 @@
 
     <script type="text/javascript">
 
-      const getbtn = document.getElementById('submit-btn');
+        let getcontainer = document.querySelector('.container');
+        let loading = document.querySelector('.loader');
 
-      getbtn.addEventListener('click',function(e){
-        e.preventDefault();
-        var getinputs = document.querySelectorAll("input[type='text'],input[type='email'],input[type='password']");
+        let page = 1;
+        let x = 0;
+        const limit = 3;
 
-        var dataobjs = {};
+        async function getposts(){
 
-        for(var i = 0 ; i < getinputs.length ; i++){
-            var getname = getinputs[i].name;
-            var getvalue = getinputs[i].value;
-            // console.log(getname,getvalue);
+            const url = `https://randomuser.me/api/?page=${page}&results=${limit}&seed=abc`;
+            let posts;
 
-            dataobjs[getname] = getvalue;
-        }
+            await fetch(url).then(response=>{
+                return response.json();
+            }).then(data=>{
+                // console.log(data);
+                posts = data.results;
+                console.log(posts);
+            }).catch(err=>{
+                console.log(err);
+            });
 
-        // console.log(dataobjs);
-
-        localStorage['info'] = JSON.stringify(dataobjs);
-
-      });
-
-      window.onload = function(){
-        let datas;
-        if(localStorage.getItem('info') != null){
-            datas = JSON.parse(localStorage.getItem('info'));
-
-            console.log(datas);
-
-            console.log(datas.firstname,datas.lastname);
-            console.log(datas.email,datas.password);
+            return posts;
 
         }
-      }
 
-      
+        // getposts();
+
+        async function showposttodom(){
+            const getusers = await getposts();
+
+            getusers.forEach(function(getuser){
+                const newdiv = document.createElement('div');
+                newdiv.classList.add('post');
+                // console.log(getuser);
+
+                newdiv.innerHTML = `
+                    <div class="postid">${++x}</div>
+                        <div class="info">
+                            <img src="${getuser.picture.large}" alt="${getuser.name.first}" />
+                            <h4 class="title">${getuser.name.title}.${getuser.name.first} ${getuser.name.last}</h4>
+                            <a href="tel:${getuser.phone}" class="content">${getuser.phone}</a>
+                            <br />
+                            <a href="mailto:${getuser.email}">${getuser.email}</a>
+                            <p class="country">${getuser.location.country}</p>
+                        </div>
+                `;
+
+                // console.log(newdiv);
+                getcontainer.appendChild(newdiv);
+
+            });
+        }
+
+        showposttodom();
+
+        window.addEventListener('scroll',function(){
+            // console.log("hay");
+
+            const {scrollHeight,scrollTop,clientHeight} = document.documentElement;
+            // console.log(scrollHeight,scrollTop,clientHeight);  // 996 347 649
+
+            if((scrollTop+clientHeight) >= scrollHeight-8){
+                // console.log("hi");
+                scrolldown();
+            }
+
+        });
+
+        function scrolldown(){
+            loading.classList.add('show');
+            setTimeout(()=>{
+                loading.classList.remove('show');
+                page++;
+                showposttodom
+            },300);
+        }
 
     </script>
 </body>
